@@ -34,8 +34,10 @@ data['price'] = data['price'].apply(lambda x: re.findall(r'\d+', str(x))[0] if r
 data['price'] = data['price'].apply(lambda x: float(x) if isinstance(x, str) and x.isdigit() else None)
 scaler =StandardScaler()
 data['price_normalized'] = scaler.fit_transform(data[['price']])
-pattern = r'[^a-zA-Z0-9\s]'
-# data['description '] = data['description '].str.replace(pattern, '')
+
+data['description '] = data['description '].astype(str)
+data['description '] = data['description '].replace(',', '', regex=True)
+
 
 data = data.dropna(subset=['price']).copy()
 
